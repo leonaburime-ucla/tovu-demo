@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Unlike blog-post.html's per-file fixed <title> (a disclosed, accepted limitation there — no post
+     ever gets its own tab title through that template), the tag directly below carries a literal
+     placeholder that `injectPageTitle` (static-render.ts) substitutes with the Page's OWN title
+     before render — the same string-substitution idea `injectPostEmbedId` already applies to a
+     marker's own id attribute. A page rendered through this template keeps its real <title> (e.g.
+     "FAQ", "Terms of Service") instead of a generic one, which matters here specifically: these five
+     legacy Pages used to render "Blog post — Basic" for exactly this reason (a hardcoded template
+     title) — see Task 1's render-gate fix — and reintroducing a hardcoded title here would bring that
+     bug back through a different door. Deliberately not spelled out literally in THIS comment: the
+     placeholder text appearing as prose here once shadowed the real one below and silently ate the
+     substitution — see `injectPageTitle`'s own doc for the fix and how the match is now scoped so
+     that cannot recur. -->
+<title>Our Story</title>
+<style>
+:root {
+  --bg: oklch(9% 0.004 250);
+  --surface: oklch(12% 0.005 250);
+  --surface-2: oklch(15% 0.006 250);
+  --fg: oklch(96% 0.003 250);
+  --muted: oklch(65% 0.012 250);
+  --border: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.16);
+  --accent: oklch(72% 0.17 152);
+  --accent-fg: oklch(14% 0.03 152);
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+:root[data-theme="light"] {
+  --bg: #f6f9f8;
+  --surface: #f1f4f2;
+  --surface-2: #e8ece9;
+  --fg: #09140f;
+  --muted: #4b5952;
+  --border: rgba(9,20,15,0.10);
+  --border-strong: rgba(9,20,15,0.18);
+  --accent: #22c373;
+  --accent-fg: #f8fbf9;
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+</style>
+<link rel="stylesheet" href="/tovu-demo/theme-assets/basic/css/styles.css" />
+<script src="/tovu-demo/theme-assets/basic/js/theme-toggle.js"></script>
+</head>
+<body>
+
+<!-- THE POINT OF THIS FILE: it is structure only. Every line below is either a marker or a wrapper
+     element. There is no nav markup here, no footer markup, and no page content — a page rendered
+     through this layout cannot forget its sidebar or its footer, because they were never its to
+     author. The theme supplies the frame on every render; the page supplies only what goes in the
+     hole.
+
+     That is also why this file is cheap to customize. Themes are COPIED from a pristine catalog, not
+     resolved through a runtime `parent` chain (2026-08-11 — the earlier `basic-child`/parent-theme
+     inheritance model this file originally shipped under was deleted the same day it was recovered
+     from history for this purpose). An author editing THIS theme's own copy of page-shell.html is
+     editing ~10 lines of pure structure, not a whole page: nav.html/footer.html still hold the real
+     nav and footer CONTENT, untouched by any edit here. Removing the footer means deleting one line;
+     swapping to the minimal footer means changing one marker's id to "footer-minimal". Compare a
+     WordPress child theme, where the fork unit is a whole PHP template carrying markup, the loop,
+     escaping, and hooks. -->
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a href="/tovu-demo/" class="brand">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Basic
+    </a>
+    <nav class="main-nav" data-embed-config='{"type":"menu","id":"menu-header-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="#">Legal</a></nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" aria-label="Switch to light mode" data-theme-toggle>
+        <span class="icon-stack">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2.2M12 18.8V21M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M3 12h2.2M18.8 12H21M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </span>
+      </button>
+      <button class="nav-toggle btn btn-ghost" aria-expanded="false" aria-label="Toggle menu">Menu</button>
+      <a href="/tovu-demo/signin" class="btn btn-ghost">Sign in</a>
+      <a href="/tovu-demo/signup" class="btn btn-solid">Get started</a>
+    </div>
+  </div>
+</header>
+
+
+<main>
+  <!-- `.post-detail` reads post-specific by name but is the theme's shared long-form-article style
+       (max-width, padding, heading/paragraph/list/code typography) — verified in css/styles.css and
+       already reused by blog-sidebar-template.html's docs article for the same reason, not something
+       introduced here. Legal/FAQ/team copy is exactly this kind of prose, so this keeps the theme's
+       one article style rather than authoring a second, near-identical one under a page-specific name. -->
+  <article class="wrap post-detail" data-reveal>
+    <div class="post-detail-header"><h1>Our Story</h1><div class="post-meta"><time datetime="2026-08-11T03:08:11.865Z">Aug 10, 2026</time></div></div><div class="post-detail-body"><h2 id="why-we-built-this">Why we built this</h2><p>This page contains no nav, no footer, and no layout. It is content only. The theme supplies the frame on every render.</p><h2 id="what-that-buys">What that buys</h2><p>An author cannot forget the sidebar, because it was never theirs to author.</p></div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom:16px;"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Basic</div>
+        <p style="font-size:13px; max-width:26ch;">Premium themed websites, ready to launch — built for teams who'd rather publish than fight a page builder.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><a href="/tovu-demo/pricing">Pricing</a><a href="/tovu-demo/download">Download</a><a href="/tovu-demo/changelog">Changelog</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/tovu-demo/docs">Docs</a><a href="/tovu-demo/blog">Blog</a><a href="/tovu-demo/about">About</a></div>
+      <div class="footer-col"><h4>Account</h4><a href="/tovu-demo/signin">Sign in</a><a href="/tovu-demo/signup">Get started</a></div>
+      <div class="footer-col"><h4>Legal</h4><div data-embed-config='{"type":"menu","id":"menu-footer-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="/tovu-demo/terms-of-service">Terms of Service</a><a href="/tovu-demo/privacy-policy">Privacy Policy</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Basic. All rights reserved.</span>
+      <span>A Tovu theme, adapted from an original Open Design export</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/tovu-demo/theme-assets/basic/js/main.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/vendor/motion.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/reveal.js"></script>
+</body>
+</html>

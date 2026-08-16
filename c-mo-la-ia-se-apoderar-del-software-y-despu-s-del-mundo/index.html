@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Fixed 2026-08-11 (was a disclosed limitation: every post through this template shared one
+     fixed tab/SEO title). The tag directly below now carries the same literal placeholder
+     `page-shell.html` already used — `injectPageTitle` (static-render.ts) substitutes it with the
+     current entity's own title before render, the same string-substitution idea
+     `injectPostEmbedId` applies to a marker's own id attribute. See that function's own doc for why
+     the match is scoped to the exact tag and must never be echoed as literal text elsewhere in this
+     file (doing so once shadowed the real tag and silently ate the substitution). -->
+<title>Cómo la IA se apoderará del software (y después del mundo)</title>
+<style>
+:root {
+  --bg: oklch(9% 0.004 250);
+  --surface: oklch(12% 0.005 250);
+  --surface-2: oklch(15% 0.006 250);
+  --fg: oklch(96% 0.003 250);
+  --muted: oklch(65% 0.012 250);
+  --border: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.16);
+  --accent: oklch(72% 0.17 152);
+  --accent-fg: oklch(14% 0.03 152);
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+:root[data-theme="light"] {
+  --bg: #f6f9f8;
+  --surface: #f1f4f2;
+  --surface-2: #e8ece9;
+  --fg: #09140f;
+  --muted: #4b5952;
+  --border: rgba(9,20,15,0.10);
+  --border-strong: rgba(9,20,15,0.18);
+  --accent: #22c373;
+  --accent-fg: #f8fbf9;
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+</style>
+<link rel="stylesheet" href="/tovu-demo/theme-assets/basic/css/styles.css" />
+<script src="/tovu-demo/theme-assets/basic/js/theme-toggle.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a href="/tovu-demo/" class="brand">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Basic
+    </a>
+    <nav class="main-nav" data-embed-config='{"type":"menu","id":"menu-header-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="#">Legal</a></nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" aria-label="Switch to light mode" data-theme-toggle>
+        <span class="icon-stack">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2.2M12 18.8V21M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M3 12h2.2M18.8 12H21M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </span>
+      </button>
+      <button class="nav-toggle btn btn-ghost" aria-expanded="false" aria-label="Toggle menu">Menu</button>
+      <a href="/tovu-demo/signin" class="btn btn-ghost">Sign in</a>
+      <a href="/tovu-demo/signup" class="btn btn-solid">Get started</a>
+    </div>
+  </div>
+</header>
+
+
+<main>
+  <article class="post-detail wrap" data-reveal>
+    <div class="post-detail-header"><h1>Cómo la IA se apoderará del software (y después del mundo)</h1><div class="post-meta"><time datetime="2026-08-09T02:07:43.367Z">Aug 8, 2026</time></div></div><div class="post-detail-body"><p>Durante décadas, el software fue algo que los humanos escribían línea por línea. Esa era está terminando. La inteligencia artificial ya no solo autocompleta código: diseña arquitecturas, escribe pruebas, depura sus propios errores y, cada vez más, decide qué construir a continuación.</p><h2 id="primera-etapa-la-conquista-del-software">Primera etapa: la conquista del software</h2><p>El ciclo de vida completo del desarrollo, desde la especificación hasta el despliegue, se está comprimiendo en un solo flujo conversacional. Lo que antes requería equipos enteros ahora lo orquesta un solo ingeniero apoyado por agentes autónomos.</p><ul><li><p><strong>Generación de código: </strong>de sugerencias línea a línea a sistemas completos generados a partir de una especificación.</p></li><li><p><strong>Pruebas y control de calidad: </strong>agentes que escriben, ejecutan y corrigen sus propias pruebas sin intervención humana.</p></li><li><p><strong>Arquitectura y decisiones de producto: </strong>sistemas que priorizan funciones y proponen el siguiente paso del roadmap.</p></li></ul><h2 id="segunda-etapa-la-conquista-del-mundo">Segunda etapa: la conquista del mundo</h2><p>El software es la capa que controla casi todo lo demás: logística, energía, finanzas, comunicación, gobierno. Si la IA se convierte en la fuerza dominante que escribe y opera ese software, se convierte por extensión en la fuerza que opera esos sistemas del mundo real.</p><ul><li><p><strong>Infraestructura crítica: </strong>redes eléctricas, cadenas de suministro y sistemas financieros cada vez más gestionados por agentes de software.</p></li><li><p><strong>Toma de decisiones institucional: </strong>empresas y gobiernos que delegan análisis y políticas a modelos capaces de procesar más información que cualquier equipo humano.</p></li><li><p><strong>Economía del trabajo: </strong>una redistribución masiva del valor desde el trabajo manual y cognitivo hacia quienes diseñan y supervisan los sistemas de IA.</p></li></ul><blockquote><p>La pregunta ya no es si la IA transformará el software y, con él, el mundo — sino qué tan rápido ocurrirá, y quién queda a cargo del volante mientras sucede.</p></blockquote><p></p></div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom:16px;"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Basic</div>
+        <p style="font-size:13px; max-width:26ch;">Premium themed websites, ready to launch — built for teams who'd rather publish than fight a page builder.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><a href="/tovu-demo/pricing">Pricing</a><a href="/tovu-demo/download">Download</a><a href="/tovu-demo/changelog">Changelog</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/tovu-demo/docs">Docs</a><a href="/tovu-demo/blog">Blog</a><a href="/tovu-demo/about">About</a></div>
+      <div class="footer-col"><h4>Account</h4><a href="/tovu-demo/signin">Sign in</a><a href="/tovu-demo/signup">Get started</a></div>
+      <div class="footer-col"><h4>Legal</h4><div data-embed-config='{"type":"menu","id":"menu-footer-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="/tovu-demo/terms-of-service">Terms of Service</a><a href="/tovu-demo/privacy-policy">Privacy Policy</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Basic. All rights reserved.</span>
+      <span>A Tovu theme, adapted from an original Open Design export</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/tovu-demo/theme-assets/basic/js/main.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/vendor/motion.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/reveal.js"></script>
+</body>
+</html>

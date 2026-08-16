@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Fixed 2026-08-11 (was the same disclosed limitation blog-post.html carried: a static theme's
+     <title> being one fixed string per file). Same placeholder `page-shell.html`/`blog-post.html`
+     already use — `injectPageTitle` (static-render.ts) substitutes it with the current entity's
+     own title before render. Do not echo the literal placeholder tag as prose text anywhere else in
+     this file — see that function's own doc for the shadowing bug that caused. -->
+<title>Theme Authoring</title>
+<style>
+:root {
+  --bg: oklch(9% 0.004 250);
+  --surface: oklch(12% 0.005 250);
+  --surface-2: oklch(15% 0.006 250);
+  --fg: oklch(96% 0.003 250);
+  --muted: oklch(65% 0.012 250);
+  --border: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.16);
+  --accent: oklch(72% 0.17 152);
+  --accent-fg: oklch(14% 0.03 152);
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+:root[data-theme="light"] {
+  --bg: #f6f9f8;
+  --surface: #f1f4f2;
+  --surface-2: #e8ece9;
+  --fg: #09140f;
+  --muted: #4b5952;
+  --border: rgba(9,20,15,0.10);
+  --border-strong: rgba(9,20,15,0.18);
+  --accent: #22c373;
+  --accent-fg: #f8fbf9;
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+</style>
+<link rel="stylesheet" href="/tovu-demo/theme-assets/basic/css/styles.css" />
+<script src="/tovu-demo/theme-assets/basic/js/theme-toggle.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a href="/tovu-demo/" class="brand">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Basic
+    </a>
+    <nav class="main-nav" data-embed-config='{"type":"menu","id":"menu-header-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="#">Legal</a></nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" aria-label="Switch to light mode" data-theme-toggle>
+        <span class="icon-stack">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2.2M12 18.8V21M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M3 12h2.2M18.8 12H21M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </span>
+      </button>
+      <button class="nav-toggle btn btn-ghost" aria-expanded="false" aria-label="Toggle menu">Menu</button>
+      <a href="/tovu-demo/signin" class="btn btn-ghost">Sign in</a>
+      <a href="/tovu-demo/signup" class="btn btn-solid">Get started</a>
+    </div>
+  </div>
+</header>
+
+
+<main>
+  <div class="docs-layout wrap">
+    <!-- The sidebar is theme markup + CSS; the only thing resolved at request time is the menu
+         inside it. `data-embed-config='{"variant":"tree"}'` opts this one marker into nested
+         <ul>/<li> rendering (see static-render.ts::renderMenuTree) — the default flat <a> output is
+         what every other marker in this theme still gets, because .main-nav's flex layout depends
+         on it. (Marker-spine unification, 2026-08-10: this used to be a bare `data-embed-variant=
+         "tree"` attribute, retired in favor of config — see static-render.ts's own file header.)
+
+         The authored content below is a real fallback, not a placeholder: if `docs-themes-menu`
+         does not exist yet, or resolves to zero renderable links, this markup is left exactly as-is
+         rather than blanked. -->
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation" data-embed-config='{"type":"menu","id":"docs-themes-menu","variant":"tree"}'><ul class="menu-list depth-0"><li class="menu-item depth-0 has-children"><a href="#getting-started">Getting Started</a><ul class="menu-list depth-1"><li class="menu-item depth-1"><a href="#what-is-a-theme">What is a theme</a></li><li class="menu-item depth-1"><a href="#theme-tiers">Theme tiers</a></li></ul></li><li class="menu-item depth-0 has-children"><a href="#authoring">Authoring</a><ul class="menu-list depth-1"><li class="menu-item depth-1"><a href="#theme-json">theme.json</a></li><li class="menu-item depth-1"><a href="#design-tokens">Design tokens</a></li><li class="menu-item depth-1"><a href="#slots-and-partials">Slots and partials</a></li><li class="menu-item depth-1"><a href="#color-modes">Color modes</a></li></ul></li><li class="menu-item depth-0 has-children"><a href="#menus">Menus</a><ul class="menu-list depth-1"><li class="menu-item depth-1"><a href="#menu-embeds">Menu embeds</a></li><li class="menu-item depth-1"><a href="#nested-menus">Nested menus</a></li></ul></li></ul></nav>
+    </aside>
+
+    <article class="docs-content post-detail" data-reveal>
+      <div class="post-detail-header"><h1>Theme Authoring</h1><div class="post-meta"><time datetime="2026-08-12T03:37:51.635Z">Aug 11, 2026</time></div></div><div class="post-detail-body"><h2 id="getting-started">Getting Started</h2><p><code>A theme controls how your site looks. Tovu ships several, and you can author your own without a build step.</code></p><h3 id="what-is-a-theme">What is a theme</h3><p><a href="https://yahoo.com">A folder with a theme.json</a> manifest, a token set, a stylesheet, and either templates or plain HTML pages. Nothing is compiled — every byte is editable.</p><h3 id="theme-tiers">Theme tiers</h3><p>Five tiers: declarative, templated, handlebars, static, and code. Static themes are plain HTML/CSS/JS and are the easiest place to start.</p><h2 id="authoring">Authoring</h2><p>Everything a theme declares about itself lives in one manifest file.</p><h3 id="theme-json">theme.json</h3><p>Declares id, name, version, tier, fonts, pages, slots, color modes, and any post templates the theme offers.</p><h3 id="design-tokens">Design tokens</h3><p>tokens.json becomes CSS custom properties on :root. An optional tokens.light.json supplies light-mode overrides.</p><h3 id="slots-and-partials">Slots and partials</h3><p>A data-tovu-slot marker pulls in a shared partial such as the nav or footer, so every page stays in sync.</p><h3 id="color-modes">Color modes</h3><p>Declare modes and a defaultMode, and the engine stamps data-theme onto the page. Your own toggle script flips it from there.</p><h2 id="menus">Menus</h2><p>Menus are content, not theme code. A theme marks where a menu goes; the menu itself is edited in the admin.</p><h3 id="menu-embeds">Menu embeds</h3><p>A data-embed-type=&quot;menu&quot; marker names a menu by its slug. If no such menu exists, the marker keeps whatever the theme authored as a fallback.</p><h3 id="nested-menus">Nested menus</h3><p>Adding data-embed-variant=&quot;tree&quot; renders the menu as a nested list with is-current and is-active hooks — which is what this sidebar is using right now.</p></div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom:16px;"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Basic</div>
+        <p style="font-size:13px; max-width:26ch;">Premium themed websites, ready to launch — built for teams who'd rather publish than fight a page builder.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><a href="/tovu-demo/pricing">Pricing</a><a href="/tovu-demo/download">Download</a><a href="/tovu-demo/changelog">Changelog</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/tovu-demo/docs">Docs</a><a href="/tovu-demo/blog">Blog</a><a href="/tovu-demo/about">About</a></div>
+      <div class="footer-col"><h4>Account</h4><a href="/tovu-demo/signin">Sign in</a><a href="/tovu-demo/signup">Get started</a></div>
+      <div class="footer-col"><h4>Legal</h4><div data-embed-config='{"type":"menu","id":"menu-footer-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="/tovu-demo/terms-of-service">Terms of Service</a><a href="/tovu-demo/privacy-policy">Privacy Policy</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Basic. All rights reserved.</span>
+      <span>A Tovu theme, adapted from an original Open Design export</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/tovu-demo/theme-assets/basic/js/main.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/vendor/motion.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/reveal.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/docs-sidebar.js"></script>
+</body>
+</html>

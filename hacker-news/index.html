@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Fixed 2026-08-11 (was the same disclosed limitation blog-post.html carried: a static theme's
+     <title> being one fixed string per file). Same placeholder `page-shell.html`/`blog-post.html`
+     already use — `injectPageTitle` (static-render.ts) substitutes it with the current entity's
+     own title before render. Do not echo the literal placeholder tag as prose text anywhere else in
+     this file — see that function's own doc for the shadowing bug that caused. -->
+<title>Hacker News</title>
+<style>
+:root {
+  --bg: oklch(9% 0.004 250);
+  --surface: oklch(12% 0.005 250);
+  --surface-2: oklch(15% 0.006 250);
+  --fg: oklch(96% 0.003 250);
+  --muted: oklch(65% 0.012 250);
+  --border: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.16);
+  --accent: oklch(72% 0.17 152);
+  --accent-fg: oklch(14% 0.03 152);
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+:root[data-theme="light"] {
+  --bg: #f6f9f8;
+  --surface: #f1f4f2;
+  --surface-2: #e8ece9;
+  --fg: #09140f;
+  --muted: #4b5952;
+  --border: rgba(9,20,15,0.10);
+  --border-strong: rgba(9,20,15,0.18);
+  --accent: #22c373;
+  --accent-fg: #f8fbf9;
+  --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --container: 1120px;
+}
+</style>
+<link rel="stylesheet" href="/tovu-demo/theme-assets/basic/css/styles.css" />
+<script src="/tovu-demo/theme-assets/basic/js/theme-toggle.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a href="/tovu-demo/" class="brand">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Basic
+    </a>
+    <nav class="main-nav" data-embed-config='{"type":"menu","id":"menu-header-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="#">Legal</a></nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" aria-label="Switch to light mode" data-theme-toggle>
+        <span class="icon-stack">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2.2M12 18.8V21M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M3 12h2.2M18.8 12H21M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </span>
+      </button>
+      <button class="nav-toggle btn btn-ghost" aria-expanded="false" aria-label="Toggle menu">Menu</button>
+      <a href="/tovu-demo/signin" class="btn btn-ghost">Sign in</a>
+      <a href="/tovu-demo/signup" class="btn btn-solid">Get started</a>
+    </div>
+  </div>
+</header>
+
+
+<main>
+  <div class="docs-layout wrap">
+    <!-- The sidebar is theme markup + CSS; the only thing resolved at request time is the menu
+         inside it. `data-embed-config='{"variant":"tree"}'` opts this one marker into nested
+         <ul>/<li> rendering (see static-render.ts::renderMenuTree) — the default flat <a> output is
+         what every other marker in this theme still gets, because .main-nav's flex layout depends
+         on it. (Marker-spine unification, 2026-08-10: this used to be a bare `data-embed-variant=
+         "tree"` attribute, retired in favor of config — see static-render.ts's own file header.)
+
+         The authored content below is a real fallback, not a placeholder: if `docs-themes-menu`
+         does not exist yet, or resolves to zero renderable links, this markup is left exactly as-is
+         rather than blanked. -->
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation" data-embed-config='{"type":"menu","id":"docs-themes-menu","variant":"tree"}'><ul class="menu-list depth-0"><li class="menu-item depth-0 has-children"><a href="#getting-started">Getting Started</a><ul class="menu-list depth-1"><li class="menu-item depth-1"><a href="#what-is-a-theme">What is a theme</a></li><li class="menu-item depth-1"><a href="#theme-tiers">Theme tiers</a></li></ul></li><li class="menu-item depth-0 has-children"><a href="#authoring">Authoring</a><ul class="menu-list depth-1"><li class="menu-item depth-1"><a href="#theme-json">theme.json</a></li><li class="menu-item depth-1"><a href="#design-tokens">Design tokens</a></li><li class="menu-item depth-1"><a href="#slots-and-partials">Slots and partials</a></li><li class="menu-item depth-1"><a href="#color-modes">Color modes</a></li></ul></li><li class="menu-item depth-0 has-children"><a href="#menus">Menus</a><ul class="menu-list depth-1"><li class="menu-item depth-1"><a href="#menu-embeds">Menu embeds</a></li><li class="menu-item depth-1"><a href="#nested-menus">Nested menus</a></li></ul></li></ul></nav>
+    </aside>
+
+    <article class="docs-content post-detail" data-reveal>
+      <div><style>
+.hn-wrap{background:var(--hn-page-bg, #f6f6ef);font-family:Verdana,Geneva,sans-serif;font-size:10pt;color:var(--hn-text, #000000);max-width:85%;margin:0 auto;padding-bottom:1rem}
+.hn-bar{background:var(--hn-orange, #ff6600);padding:2px 2px 2px 4px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.hn-logo{border:1px solid var(--hn-logo-border, #ffffff);width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;color:var(--hn-logo-text, #ffffff);background:var(--hn-orange, #ff6600);flex:none}
+.hn-bar a{color:var(--hn-text, #000000);text-decoration:none}
+.hn-bar a:hover{text-decoration:underline}
+.hn-title{font-weight:bold;margin-right:6px}
+.hn-nav{font-size:10pt}
+.hn-nav span{margin:0 2px}
+.hn-login{margin-left:auto;padding-right:4px}
+.hn-list{list-style:none;margin:0;padding:8px 0 0 0}
+.hn-item{padding:2px 4px 0 4px}
+.hn-line{display:flex;align-items:baseline;gap:4px}
+.hn-rank{color:var(--hn-meta, #828282);min-width:2.2em;text-align:right;flex:none}
+.hn-vote{color:var(--hn-meta, #828282);font-size:11px;line-height:1;flex:none;cursor:default}
+.hn-link{color:var(--hn-text, #000000);text-decoration:none}
+.hn-link:visited{color:var(--hn-visited, #828282)}
+.hn-link:hover{text-decoration:underline}
+.hn-domain{color:var(--hn-meta, #828282);font-size:8pt}
+.hn-domain a{color:var(--hn-meta, #828282);text-decoration:none}
+.hn-sub{color:var(--hn-meta, #828282);font-size:8pt;padding-left:calc(2.2em + 16px);margin:1px 0 5px 0}
+.hn-sub a{color:var(--hn-meta, #828282);text-decoration:none}
+.hn-sub a:hover{text-decoration:underline}
+.hn-more{padding:10px 0 0 calc(2.2em + 16px);font-size:10pt}
+.hn-more a{color:var(--hn-text, #000000);text-decoration:none;font-weight:bold}
+.hn-foot{border-top:2px solid var(--hn-orange, #ff6600);margin-top:14px;padding-top:8px;text-align:center;font-size:8pt;color:var(--hn-meta, #828282)}
+.hn-foot a{color:var(--hn-meta, #828282);text-decoration:none}
+.hn-foot a:hover{text-decoration:underline}
+@media (max-width:640px){.hn-wrap{max-width:100%}.hn-sub,.hn-more{padding-left:8px}}
+</style>
+
+<div class="hn-wrap">
+
+  <div data-agent-element="page-hero" data-agent-role="region">
+    <div class="hn-bar">
+      <span class="hn-logo">Y</span>
+      <span class="hn-title"><a href="#">Hacker News</a></span>
+      <span class="hn-nav">
+        <a href="#">new</a><span>|</span><a href="#">past</a><span>|</span><a href="#">comments</a><span>|</span><a href="#">ask</a><span>|</span><a href="#">show</a><span>|</span><a href="#">jobs</a><span>|</span><a href="#">submit</a>
+      </span>
+      <span class="hn-login"><a href="#">login</a></span>
+    </div>
+  </div>
+
+  <div data-agent-element="page-body" data-agent-role="region">
+    <ol class="hn-list">
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">1.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">Show HN: I built a self-hosted CMS that agents can edit safely</a><span class="hn-domain">(<a href="#">github.com</a>)</span></div>
+        <div class="hn-sub">412 points by <a href="#">tptacek</a> 3 hours ago | <a href="#">hide</a> | <a href="#">218&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">2.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">SQLite is not a toy database</a><span class="hn-domain">(<a href="#">antonz.org</a>)</span></div>
+        <div class="hn-sub">287 points by <a href="#">nalgeon</a> 5 hours ago | <a href="#">hide</a> | <a href="#">143&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">3.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">The hidden cost of your dependency tree</a><span class="hn-domain">(<a href="#">rachelbythebay.com</a>)</span></div>
+        <div class="hn-sub">356 points by <a href="#">zdw</a> 7 hours ago | <a href="#">hide</a> | <a href="#">191&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">4.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">Ask HN: What are you working on this weekend?</a></div>
+        <div class="hn-sub">98 points by <a href="#">whoishiring</a> 2 hours ago | <a href="#">hide</a> | <a href="#">312&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">5.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">A brief history of the terminal emulator</a><span class="hn-domain">(<a href="#">two-wrongs.com</a>)</span></div>
+        <div class="hn-sub">204 points by <a href="#">todsacerdoti</a> 9 hours ago | <a href="#">hide</a> | <a href="#">77&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">6.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">Writing a compiler in 500 lines of Python</a><span class="hn-domain">(<a href="#">vgel.me</a>)</span></div>
+        <div class="hn-sub">521 points by <a href="#">vgel</a> 11 hours ago | <a href="#">hide</a> | <a href="#">104&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">7.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">Why CSS custom properties changed how I build themes</a><span class="hn-domain">(<a href="#">css-tricks.com</a>)</span></div>
+        <div class="hn-sub">142 points by <a href="#">chriscoyier</a> 6 hours ago | <a href="#">hide</a> | <a href="#">58&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">8.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">Launch HN: Tovu (YC S26) &#8211; A CMS built for AI agents</a></div>
+        <div class="hn-sub">176 points by <a href="#">tovu_team</a> 4 hours ago | <a href="#">hide</a> | <a href="#">89&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">9.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">The case against microservices for small teams</a><span class="hn-domain">(<a href="#">martinfowler.com</a>)</span></div>
+        <div class="hn-sub">389 points by <a href="#">ingve</a> 13 hours ago | <a href="#">hide</a> | <a href="#">267&nbsp;comments</a></div>
+      </li>
+
+      <li class="hn-item">
+        <div class="hn-line"><span class="hn-rank">10.</span><span class="hn-vote">&#9650;</span><a class="hn-link" href="#">Reverse engineering the 1975 Altair 8800 front panel</a><span class="hn-domain">(<a href="#">righto.com</a>)</span></div>
+        <div class="hn-sub">233 points by <a href="#">kens</a> 15 hours ago | <a href="#">hide</a> | <a href="#">62&nbsp;comments</a></div>
+      </li>
+
+    </ol>
+
+    <div class="hn-more"><a href="#">More</a></div>
+  </div>
+
+  <div data-agent-element="page-cta" data-agent-role="region">
+    <div class="hn-foot">
+      <a href="#">Guidelines</a> | <a href="#">FAQ</a> | <a href="#">Lists</a> | <a href="#">API</a> | <a href="#">Security</a> | <a href="#">Legal</a> | <a href="#">Apply to YC</a> | <a href="#">Contact</a>
+    </div>
+  </div>
+
+</div></div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom:16px;"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Basic</div>
+        <p style="font-size:13px; max-width:26ch;">Premium themed websites, ready to launch — built for teams who'd rather publish than fight a page builder.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><a href="/tovu-demo/pricing">Pricing</a><a href="/tovu-demo/download">Download</a><a href="/tovu-demo/changelog">Changelog</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/tovu-demo/docs">Docs</a><a href="/tovu-demo/blog">Blog</a><a href="/tovu-demo/about">About</a></div>
+      <div class="footer-col"><h4>Account</h4><a href="/tovu-demo/signin">Sign in</a><a href="/tovu-demo/signup">Get started</a></div>
+      <div class="footer-col"><h4>Legal</h4><div data-embed-config='{"type":"menu","id":"menu-footer-nav"}'><a href="/tovu-demo/about">About</a><a href="/tovu-demo/contact">Contact</a><a href="/tovu-demo/team">Team</a><a href="/tovu-demo/faq">FAQ</a><a href="/tovu-demo/terms-of-service">Terms of Service</a><a href="/tovu-demo/privacy-policy">Privacy Policy</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Basic. All rights reserved.</span>
+      <span>A Tovu theme, adapted from an original Open Design export</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/tovu-demo/theme-assets/basic/js/main.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/vendor/motion.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/reveal.js"></script>
+<script src="/tovu-demo/theme-assets/basic/js/docs-sidebar.js"></script>
+</body>
+</html>
